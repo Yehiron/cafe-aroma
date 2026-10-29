@@ -1,14 +1,29 @@
+import { useState, useEffect } from "react";
 import ProductoCard from "./components/ProductoCard";
 
 function App() {
+  const [productos, setProductos] = useState([])
+
+  useEffect(() => {
+    async function cargar() {
+      const respuesta = await fetch('/menu.json')
+      const datos = await respuesta.json()
+      setProductos(datos)
+    }
+    cargar()
+  }, [])
+
   return(
     <main>
-      <h1>Café Aroma</h1>
-      <section className="tarjetas">
-        <ProductCard nombre="Cappuchino" descripcion="Cafe a base de espresso y leche vaporizada" precio={7500}/>
-        <ProductoCard nombre="Chocolate" descripcion="Cacao al 80% de pureza con almendras" precio={8500}/>
-        <ProductoCard nombre="Pandebono" descripcion="Recien horneado" precio={3500}/>
-      </section>
+      <h1>Cafe Arome</h1>
+      <section className="tarjetas">{productos.map((producto) => (
+        <ProductoCard
+          key={producto._id}
+          nombre={producto.nombre}
+          descripcion={producto.descripcion}
+          precio={producto.precio}
+        />
+      ))}</section>
     </main>
   )
 }

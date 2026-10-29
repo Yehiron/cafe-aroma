@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-useEffect(() => {
-    console.log('Se dibujo la tarjeta de', nombre)
-})
+
 
 function ProductoCard({nombre, descripcion, precio}) {
     const [cantidad, setCantidad] = useState(0)
-
+    
+    useEffect(() => {
+    console.log('Se dibujo la tarjeta de', nombre)
+    }, [])
+    
     return(
     <article>
         <h3>{nombre}</h3>
