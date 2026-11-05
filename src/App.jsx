@@ -1,30 +1,34 @@
-import { useState, useEffect } from "react";
-import ProductoCard from "./components/ProductoCard";
+import { useEffect } from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router";
+import Inicio from "./Inicio";
+import Menu from "./Menu";
+import Contacto from "./Contacto";
+
 
 function App() {
-  const [productos, setProductos] = useState([])
-
   useEffect(() => {
-    async function cargar() {
-      const respuesta = await fetch('/menu.json')
-      const datos = await respuesta.json()
-      setProductos(datos)
-    }
-    cargar()
+    console.log("Entraste a la cafeteria")
   }, [])
-
+  
   return(
-    <main>
-      <h1>Cafe Arome</h1>
-      <section className="tarjetas">{productos.map((producto) => (
-        <ProductoCard
-          key={producto._id}
-          nombre={producto.nombre}
-          descripcion={producto.descripcion}
-          precio={producto.precio}
-        />
-      ))}</section>
-    </main>
+    <BrowserRouter>
+      <header>
+        <h1>CAfe Aroma</h1>
+          <nav>
+            <ul>
+                <li><Link to="/">Inicio</Link></li>
+                <li><Link to="/menu">Menú</Link></li>
+                <li><Link to="/contacto">Contacto</Link></li>
+            </ul>
+          </nav>
+      </header>
+      <Routes>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/contacto" element={<Contacto />} />
+      </Routes>
+    
+    </BrowserRouter>
   )
 }
 
